@@ -1,8 +1,12 @@
+function initAIEngine() {
+    console.log("AI Engine initialized.");
+}
+
 async function localFallback(prompt) {
-    // Simple pattern matching for offline
     if (/hello|hi/i.test(prompt)) return "Hello! I am MAYA, your AI assistant.";
     if (/project/i.test(prompt)) return "You can create or select a project.";
-    return "Offline response: Unable to process complex queries.";
+    if (/help/i.test(prompt)) return "I can help you with various tasks. Try asking me about projects, voice commands, or general assistance.";
+    return "I'm here to help! Ask me anything.";
 }
 
 async function llmStub(model, prompt) {

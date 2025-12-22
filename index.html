@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0ff">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="styles.css">
-<title>DJM AI - MAYA</title>
+<title>DJM - Danish Jani Master</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script defer src="config.js"></script>
 <script defer src="auth.js"></script>
 <script defer src="db.js"></script>
@@ -16,27 +21,228 @@
 <script defer src="rag.js"></script>
 <script defer src="security.js"></script>
 <script defer src="backup.js"></script>
+<script defer src="ui.js"></script>
 <script defer src="app.js"></script>
 </head>
 <body>
-<div id="app">
-    <header>
-        <h1>DJM AI - MAYA</h1>
-        <div id="profile-panel">Owner: danishjani@gmail.com (locked)</div>
+<!-- Animated Star Background -->
+<div class="star-background" id="starBackground"></div>
+
+<!-- Main App Container -->
+<div id="app" class="app-container">
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <h1 class="app-title">DJM - Danish Jani Master</h1>
+            <div class="header-actions">
+                <button class="project-selector-btn" id="projectSelectorBtn" aria-label="Select Project">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" rx="1"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1"/>
+                    </svg>
+                </button>
+                <button class="profile-btn" id="profileBtn" aria-label="Profile">
+                    <div class="avatar-circle">DJ</div>
+                </button>
+            </div>
+        </div>
     </header>
-    <main id="chat-window"></main>
-    <footer>
-        <input type="text" id="user-input" placeholder="Type your message...">
-        <button id="mic-toggle">🎤</button>
-        <button id="send-btn">Send</button>
+
+    <!-- Project Selector Dropdown -->
+    <div class="project-dropdown glass-panel" id="projectDropdown">
+        <div class="dropdown-header">
+            <h3>Projects</h3>
+            <button class="new-project-btn" id="newProjectBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                New
+            </button>
+        </div>
+        <div class="project-list" id="projectList">
+            <div class="project-item active" data-project="default">
+                <div class="project-icon">🎯</div>
+                <div class="project-info">
+                    <div class="project-name">Default Project</div>
+                    <div class="project-meta">Active</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Window -->
+    <main class="chat-window" id="chatWindow">
+        <div class="chat-container" id="chatContainer">
+            <!-- Welcome Message -->
+            <div class="welcome-screen">
+                <div class="welcome-logo">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                </div>
+                <h2 class="welcome-title">Welcome to MAYA</h2>
+                <p class="welcome-subtitle">Your advanced AI assistant powered by multiple models</p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎤</div>
+                        <div class="feature-text">Voice Commands</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🖼️</div>
+                        <div class="feature-text">Image Analysis</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💡</div>
+                        <div class="feature-text">Smart Reasoning</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-text">Secure & Private</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Input Bar -->
+    <footer class="input-bar">
+        <div class="input-container">
+            <button class="action-btn" id="attachBtn" aria-label="Attach File">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+                </svg>
+            </button>
+
+            <div class="input-wrapper">
+                <textarea
+                    id="userInput"
+                    class="user-input"
+                    placeholder="Message MAYA..."
+                    rows="1"
+                    aria-label="Message input"
+                ></textarea>
+            </div>
+
+            <button class="action-btn camera-btn" id="cameraBtn" aria-label="Camera">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                </svg>
+            </button>
+
+            <button class="primary-action-btn" id="primaryActionBtn" aria-label="Voice Input">
+                <svg class="mic-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="23"/>
+                    <line x1="8" y1="23" x2="16" y2="23"/>
+                </svg>
+                <svg class="send-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+            </button>
+        </div>
+        <div class="voice-indicator" id="voiceIndicator">
+            <div class="voice-wave"></div>
+            <div class="voice-wave"></div>
+            <div class="voice-wave"></div>
+            <span class="voice-text">Listening...</span>
+        </div>
     </footer>
+
+</div>
+
+<!-- Profile Panel -->
+<div class="profile-panel" id="profilePanel">
+    <div class="profile-overlay" id="profileOverlay"></div>
+    <div class="profile-content glass-panel">
+        <div class="profile-header">
+            <h3>Profile</h3>
+            <button class="close-btn" id="closeProfileBtn" aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="profile-body">
+            <div class="profile-avatar-large">
+                <div class="avatar-circle large">DJ</div>
+            </div>
+            <div class="profile-info">
+                <div class="profile-name">Danish Jani</div>
+                <div class="profile-email">danishjani@gmail.com</div>
+                <div class="profile-role">Owner</div>
+            </div>
+            <div class="profile-notes">
+                <label for="profileNotes">Personal Notes</label>
+                <textarea id="profileNotes" placeholder="Add your notes here..." rows="4"></textarea>
+            </div>
+            <div class="profile-actions">
+                <button class="secondary-btn" id="exportBackupBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Export Backup
+                </button>
+                <button class="secondary-btn" id="importBackupBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    Import Backup
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Attachment Modal -->
-<div id="attachment-modal" class="hidden">
-    <input type="file" id="attachment-input" accept="image/*,.pdf,.mp4">
-    <button id="attach-btn">Attach</button>
-    <button id="close-attachment">Close</button>
+<div class="attachment-modal" id="attachmentModal">
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal-content glass-panel">
+        <div class="modal-header">
+            <h3>Attach File</h3>
+            <button class="close-btn" id="closeModalBtn" aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <input type="file" id="attachmentInput" accept="image/*,.pdf,.mp4" style="display: none;">
+            <div class="file-drop-zone" id="fileDropZone">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <p>Drop file here or click to browse</p>
+                <span class="file-types">Images, PDF, MP4</span>
+            </div>
+            <div class="file-preview" id="filePreview"></div>
+        </div>
+        <div class="modal-actions">
+            <button class="secondary-btn" id="cancelAttachBtn">Cancel</button>
+            <button class="primary-btn" id="confirmAttachBtn">Attach</button>
+        </div>
+    </div>
 </div>
+
+<!-- Loading Indicator -->
+<div class="loading-indicator" id="loadingIndicator">
+    <div class="loading-spinner"></div>
+</div>
+
 </body>
 </html>

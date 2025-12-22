@@ -2,6 +2,15 @@ const DB_NAME = "DJM_DB";
 const DB_VERSION = 1;
 let db;
 
+async function initDB() {
+    try {
+        await openDB();
+        console.log("Database initialized.");
+    } catch (error) {
+        console.error("Database initialization failed:", error);
+    }
+}
+
 function openDB() {
     return new Promise((resolve, reject) => {
         const request = indexedDB.open(DB_NAME, DB_VERSION);

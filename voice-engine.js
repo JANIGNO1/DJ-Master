@@ -1,6 +1,6 @@
 let recognition, synth;
 
-function initVoice() {
+function initVoiceEngine() {
     if ('webkitSpeechRecognition' in window) {
         recognition = new webkitSpeechRecognition();
         recognition.continuous = false;
@@ -8,7 +8,13 @@ function initVoice() {
         recognition.onresult = async (e) => {
             const transcript = e.results[0][0].transcript;
             console.log("Voice input:", transcript);
-            processUserMessage(transcript);
+            if (typeof processUserMessage === 'function') {
+                await processUserMessage(transcript);
+            }
+            const voiceIndicator = document.getElementById('voiceIndicator');
+            if (voiceIndicator) {
+                voiceIndicator.classList.remove('active');
+            }
         };
     }
 
