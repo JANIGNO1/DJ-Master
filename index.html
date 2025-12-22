@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0ff">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="styles.css">
+<title>DJM AI - MAYA</title>
+<script defer src="config.js"></script>
+<script defer src="auth.js"></script>
+<script defer src="db.js"></script>
+<script defer src="ai-engine.js"></script>
+<script defer src="voice-engine.js"></script>
+<script defer src="multimodal.js"></script>
+<script defer src="rag.js"></script>
+<script defer src="security.js"></script>
+<script defer src="backup.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<div id="app">
+    <header>
+        <h1>DJM AI - MAYA</h1>
+        <div id="profile-panel">Owner: danishjani@gmail.com (locked)</div>
+    </header>
+    <main id="chat-window"></main>
+    <footer>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button id="mic-toggle">🎤</button>
+        <button id="send-btn">Send</button>
+    </footer>
+</div>
+
+<!-- Attachment Modal -->
+<div id="attachment-modal" class="hidden">
+    <input type="file" id="attachment-input" accept="image/*,.pdf,.mp4">
+    <button id="attach-btn">Attach</button>
+    <button id="close-attachment">Close</button>
+</div>
+</body>
+</html>
