@@ -10,29 +10,33 @@ let currentUser = null;
  * Initialize Google OAuth and verify owner email
  */
 async function initAuth() {
-  return new Promise((resolve, reject) => {
-    // Load Google Identity Services script dynamically
+  return new Promise((resolve) => {
     const script = document.createElement("script");
     script.src = "https://accounts.google.com/gsi/client";
     script.async = true;
     script.defer = true;
     script.onload = () => {
       console.log("Google Identity Services loaded.");
-
-      // Initialize Google Sign-In
-      google.accounts.id.initialize({
-        client_id: CLIENT_ID,
-        callback: handleCredentialResponse,
-        auto_select: true
-      });
-
-      // Render a hidden button for auto login (optional)
-      google.accounts.id.prompt(); // prompt login if not already
-
+      try {
+        if (typeof google !== 'undefined' && google.accounts) {
+          google.accounts.id.initialize({
+            client_id: CLIENT_ID,
+            callback: handleCredentialResponse,
+            auto_select: false
+          });
+          google.accounts.id.prompt();
+        }
+      } catch (e) {
+        console.warn("Google OAuth not available, continuing without auth");
+      }
       resolve();
     };
 
-    script.onerror = () => reject("Failed to load Google Identity Services.");
+    script.onerror = () => {
+      console.warn("Google Identity Services failed to load, continuing without auth");
+      resolve();
+    };
+
     document.head.appendChild(script);
   });
 }

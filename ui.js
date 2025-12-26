@@ -4,11 +4,25 @@ let currentAttachment = null;
 function initUI() {
     console.log("Initializing UI...");
 
-    initStarBackground();
+    try {
+        initStarBackground();
+    } catch (e) {
+        console.warn("Star background initialization failed:", e);
+    }
 
-    initEventListeners();
+    try {
+        initEventListeners();
+    } catch (e) {
+        console.warn("Event listeners initialization failed:", e);
+    }
 
-    adjustInputHeight();
+    try {
+        adjustInputHeight();
+    } catch (e) {
+        console.warn("Input height adjustment failed:", e);
+    }
+
+    console.log("UI initialization complete!");
 }
 
 function initStarBackground() {

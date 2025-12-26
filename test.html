@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJM MAYA - Test Page</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', Segoe UI, system-ui, sans-serif;
+            background: #000;
+            color: #00F0FF;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { font-size: 2.5rem; margin-bottom: 30px; text-shadow: 0 0 20px rgba(0,240,255,0.5); }
+        .status {
+            background: rgba(0,240,255,0.1);
+            border: 1px solid rgba(0,240,255,0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .check { color: #00FF99; font-weight: bold; }
+        .fail { color: #FF4444; font-weight: bold; }
+        button {
+            background: linear-gradient(135deg, #00F0FF, #00CCFF);
+            border: none;
+            color: #000;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px 10px 10px 0;
+        }
+        button:hover { transform: scale(1.05); }
+        code { background: rgba(0,240,255,0.1); padding: 2px 6px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>DJM MAYA - System Diagnostic</h1>
+
+    <div class="status">
+        <h2>Environment Check</h2>
+        <p><span class="check">✓</span> JavaScript Enabled</p>
+        <p><span id="dom-check" class="check">✓</span> DOM Ready</p>
+        <p><span id="css-check" class="check">✓</span> Styles Loaded</p>
+        <p id="online-status"><span class="check">✓</span> Online</p>
+    </div>
+
+    <div class="status">
+        <h2>File Dependencies</h2>
+        <p><span id="config" class="check">✓</span> config.js</p>
+        <p><span id="auth" class="check">✓</span> auth.js</p>
+        <p><span id="db" class="check">✓</span> db.js</p>
+        <p><span id="aiEngine" class="check">✓</span> ai-engine.js</p>
+        <p><span id="voiceEngine" class="check">✓</span> voice-engine.js</p>
+        <p><span id="ui" class="check">✓</span> ui.js</p>
+    </div>
+
+    <div class="status">
+        <h2>Browser API Support</h2>
+        <p><span id="indexeddb" class="check">✓</span> IndexedDB</p>
+        <p><span id="localStorage" class="check">✓</span> Local Storage</p>
+        <p><span id="speechapi" class="check">✓</span> Web Speech API</p>
+        <p><span id="serviceWorker" class="check">✓</span> Service Worker</p>
+    </div>
+
+    <div class="status">
+        <h2>Quick Actions</h2>
+        <button onclick="testSpeechRecognition()">Test Voice Input</button>
+        <button onclick="testIndexedDB()">Test Database</button>
+        <button onclick="goToApp()">Open Main App</button>
+        <button onclick="openDevTools()">Open Dev Tools</button>
+    </div>
+
+    <div class="status">
+        <h2>System Ready</h2>
+        <p>Click <strong>Open Main App</strong> to launch DJM MAYA</p>
+    </div>
+</div>
+
+<script>
+// Check all dependencies
+window.addEventListener('load', () => {
+    // Check config
+    if (typeof config !== 'undefined') {
+        document.getElementById('config').innerHTML = '<span class="check">✓</span> config.js';
+    } else {
+        document.getElementById('config').innerHTML = '<span class="fail">✗</span> config.js';
+    }
+
+    // Check auth
+    if (typeof initAuth === 'function') {
+        document.getElementById('auth').innerHTML = '<span class="check">✓</span> auth.js';
+    } else {
+        document.getElementById('auth').innerHTML = '<span class="fail">✗</span> auth.js';
+    }
+
+    // Check db
+    if (typeof openDB === 'function') {
+        document.getElementById('db').innerHTML = '<span class="check">✓</span> db.js';
+    } else {
+        document.getElementById('db').innerHTML = '<span class="fail">✗</span> db.js';
+    }
+
+    // Check AI Engine
+    if (typeof localFallback === 'function') {
+        document.getElementById('aiEngine').innerHTML = '<span class="check">✓</span> ai-engine.js';
+    } else {
+        document.getElementById('aiEngine').innerHTML = '<span class="fail">✗</span> ai-engine.js';
+    }
+
+    // Check Voice Engine
+    if (typeof initVoiceEngine === 'function') {
+        document.getElementById('voiceEngine').innerHTML = '<span class="check">✓</span> voice-engine.js';
+    } else {
+        document.getElementById('voiceEngine').innerHTML = '<span class="fail">✗</span> voice-engine.js';
+    }
+
+    // Check UI
+    if (typeof initUI === 'function') {
+        document.getElementById('ui').innerHTML = '<span class="check">✓</span> ui.js';
+    } else {
+        document.getElementById('ui').innerHTML = '<span class="fail">✗</span> ui.js';
+    }
+
+    // Check APIs
+    if ('indexedDB' in window) {
+        document.getElementById('indexeddb').innerHTML = '<span class="check">✓</span> IndexedDB';
+    } else {
+        document.getElementById('indexeddb').innerHTML = '<span class="fail">✗</span> IndexedDB';
+    }
+
+    if ('localStorage' in window) {
+        document.getElementById('localStorage').innerHTML = '<span class="check">✓</span> Local Storage';
+    } else {
+        document.getElementById('localStorage').innerHTML = '<span class="fail">✗</span> Local Storage';
+    }
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        document.getElementById('speechapi').innerHTML = '<span class="check">✓</span> Web Speech API';
+    } else {
+        document.getElementById('speechapi').innerHTML = '<span class="fail">✗</span> Web Speech API (Chrome/Edge only)';
+    }
+
+    if ('serviceWorker' in navigator) {
+        document.getElementById('serviceWorker').innerHTML = '<span class="check">✓</span> Service Worker';
+    } else {
+        document.getElementById('serviceWorker').innerHTML = '<span class="fail">✗</span> Service Worker';
+    }
+
+    if (!navigator.onLine) {
+        document.getElementById('online-status').innerHTML = '<span class="fail">✗</span> Offline Mode';
+    }
+});
+
+function testSpeechRecognition() {
+    if ('webkitSpeechRecognition' in window) {
+        alert('Speech Recognition available! Click the mic button in the app to test.');
+    } else {
+        alert('Speech Recognition not supported in this browser. Use Chrome, Edge, or Safari.');
+    }
+}
+
+function testIndexedDB() {
+    if ('indexedDB' in window) {
+        const request = indexedDB.open('test');
+        request.onsuccess = () => {
+            alert('✓ IndexedDB working correctly');
+        };
+        request.onerror = () => {
+            alert('✗ IndexedDB failed');
+        };
+    } else {
+        alert('IndexedDB not available');
+    }
+}
+
+function goToApp() {
+    window.location.href = './index.html';
+}
+
+function openDevTools() {
+    console.log('Open browser DevTools with F12 or Cmd+Option+I to view console logs');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "djm-maya-assistant",
+  "version": "1.0.0",
+  "description": "Premium AI Assistant with Voice Integration",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "serve": "npx serve .",
+    "build": "echo 'No build step needed for vanilla JS'"
+  },
+  "keywords": ["ai", "assistant", "voice", "cyberpunk"],
+  "author": "Danish Jani",
+  "license": "MIT"
+}

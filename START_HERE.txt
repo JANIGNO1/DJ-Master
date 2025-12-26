@@ -1,0 +1,85 @@
+╔════════════════════════════════════════════════════════════════╗
+║                  DJM MAYA - Quick Start Guide                  ║
+║             Premium Cyberpunk AI Assistant                      ║
+╚════════════════════════════════════════════════════════════════╝
+
+⚡ INSTANT START (Pick One Method)
+
+1️⃣  PYTHON (Easiest)
+   Open terminal/command prompt in this folder and run:
+
+   python3 -m http.server 8000
+
+   Then open in browser: http://localhost:8000
+
+2️⃣  NODE.JS
+   npm install -g serve
+   serve .
+
+   Follow the printed URL
+
+3️⃣  VS CODE
+   Install "Live Server" extension
+   Right-click index.html → "Open with Live Server"
+
+═══════════════════════════════════════════════════════════════════
+
+✅ BEFORE OPENING MAIN APP - TEST THE SYSTEM
+
+First, visit the test page to verify everything:
+   http://localhost:8000/test.html
+
+This will check:
+  ✓ All JavaScript files loaded
+  ✓ Browser APIs working
+  ✓ Voice input support
+  ✓ Database functionality
+
+═══════════════════════════════════════════════════════════════════
+
+🚀 MAIN APP
+
+Once test page shows all ✓ marks, click "Open Main App"
+Or visit: http://localhost:8000
+
+═══════════════════════════════════════════════════════════════════
+
+💡 FEATURES YOU'LL FIND
+
+🎤  Voice Input      - Click the mic button to talk
+💬  Chat Interface   - Type or speak messages
+📎  Attachments      - Drag files into the chat
+🎯  Projects         - Create multiple projects
+👤  Profile          - Manage your profile
+💾  Backup           - Export/import chats
+⭐  Animations       - Smooth, beautiful transitions
+🌊  Glassmorphism    - Futuristic design
+🔒  Secure Storage   - All data stays local
+
+═══════════════════════════════════════════════════════════════════
+
+❓ TROUBLESHOOTING
+
+Not opening?
+→ Check browser console (F12) for errors
+→ Visit test.html first
+→ Try different browser
+
+No sound/voice?
+→ Use Chrome, Edge, or Safari
+→ Grant microphone permission
+→ Check browser settings
+
+Styles look weird?
+→ Hard refresh: Ctrl+Shift+R (or Cmd+Shift+R on Mac)
+→ Clear browser cache
+
+═══════════════════════════════════════════════════════════════════
+
+📖 MORE INFORMATION
+
+For detailed docs, see: README.md
+
+═══════════════════════════════════════════════════════════════════
+
+Ready? Start with ONE command above and enjoy! 🎉

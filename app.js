@@ -5,8 +5,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("Starting DJM boot sequence...");
 
     // 1️⃣ Auth
-    await initAuth(); // <-- now guaranteed to exist
-    console.log("Auth completed.");
+    if (typeof initAuth === "function") {
+      await initAuth();
+      console.log("Auth completed.");
+    }
 
     // 2️⃣ DB Initialization
     if (typeof initDB === "function") {
@@ -36,5 +38,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   } catch (err) {
     console.error("DJM Boot failed:", err);
+    if (typeof initUI === "function") {
+      initUI();
+    }
   }
 });
